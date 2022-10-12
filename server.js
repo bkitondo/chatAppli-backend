@@ -1,10 +1,6 @@
-const http = require('http')
-const app = require('./app')
-const server= http.createServer(app)
-// const socket = require('socket.io')
+const express = require('express')
+const app = express()
+const port = process.env.PORT || 5000
 
-const port = (process.env.port||8080)
-server.listen(port,(err)=>{
-    if(err) throw err;
-    console.log(`le serveur ecoute le port ${port}`);
-})
+
+app.listen(port, console.log(`server is started port ${port}`))
