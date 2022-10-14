@@ -1,6 +1,16 @@
-const express = require('express')
-const app = express()
-const port = process.env.PORT || 5000
+const http = require('http')
+const app = require('./app')
+const server  = http.createServer(app)
+const port = process.env.PORT || 8080
+require('./connexion/connexion')
 
 
-app.listen(port, console.log(`server is started port ${port}`))
+
+
+server.listen(port, console.log(`server is starting port ${port}`))
+
+
+
+
+
+
