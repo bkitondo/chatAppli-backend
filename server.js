@@ -3,7 +3,7 @@ const app = require('./app')
 require('./connexion/connexion')
 const port = process.env.PORT || 8080
 
-http.createServer(app)
+http.createServer(app.app)
 .listen(port, console.log(`server is starting port ${port}`))
 
 

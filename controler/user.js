@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const User = require('../models/userModel')
+const jwt = require('jwt-simple')
 
 exports.createUser = (req, res,next)=>{
     bcrypt.hash(req.body.password, 10)
@@ -9,10 +10,9 @@ exports.createUser = (req, res,next)=>{
             phone: req.body.phone,
             password : hash        
         })
-        
         user.save()
         .then(()=>{
-            res.status(201).json({message: "utilisateur crée"})
+            res.status(201).json(`${user.userName} est crée avec succés`)
         })
         .catch(err => res.status(400).json({err}))
     })
@@ -21,13 +21,40 @@ exports.createUser = (req, res,next)=>{
 
 exports.getAllUser = (req, res, next)=>{
     User.find()
-    .then(user=>{
-        res.status(200).json(`user ${user}`)
+    .then(users=>{
+        res.status(200).json(`user ${users}`)
     })
     .catch(err=>{res.status(400).json({err})})
-
 }
 
-exports.singIn = ()=>{
-
+exports.signIn = (req, res)=>{
+    User.findOne({phone : req.body.phone})
+    .then(user =>{
+        if(!user){res.status(401).json({
+            message: 'telephone ou mot de passe incorrect'
+        })}
+        else{
+            const payload = {
+                id:user._id,
+                nom : user.userName,
+                phone : user.phone,
+                expire : 24*60*60*1000
+            }
+            const token = jwt.encode(payload, '|Bk28051996|')
+            bcrypt.compare(req.body.password, user.password)
+            .then(valid =>{
+                if(!valid){res.status(401).json({
+                    message: 'telephone ou mot de passe incorrect'
+                })}
+                else{
+                    delete user.password
+                    res.status(200).json({
+                        userId: user._id,
+                        token : `Bearer ${token}`
+                    })
+                }
+            })
+            .catch(err => res.status(400).json({err}))
+        }
+    })
 }
