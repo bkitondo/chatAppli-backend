@@ -4,9 +4,7 @@ const mongooseUniqueValidator = require('mongoose-unique-validator')
 const userSchema = mongoose.Schema({
    userName:{
     type:String,
-    required : true,
-    min: 4,
-    max: 20
+    required : true
    },
    phone :{
     type : Number,
