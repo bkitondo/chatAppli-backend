@@ -1,10 +1,13 @@
 const http = require('http')
 const app = require('./app')
-const server= http.createServer(app)
-// const socket = require('socket.io')
+require('./connexion/connexion')
+const port = process.env.PORT || 8080
 
-const port = (process.env.port||8080)
-server.listen(port,(err)=>{
-    if(err) throw err;
-    console.log(`le serveur ecoute le port ${port}`);
-})
+http.createServer(app.app)
+.listen(port, console.log(`server is starting port ${port}`))
+
+
+
+
+
+
