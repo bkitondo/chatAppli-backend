@@ -22,7 +22,7 @@ exports.createUser = (req, res,next)=>{
 exports.getAllUser = (req, res, next)=>{
     User.find()
     .then(users=>{
-        res.status(200).json(`user ${users}`)
+        res.status(200).json(users)
     })
     .catch(err=>{res.status(400).json({err})})
 }
