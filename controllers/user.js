@@ -14,9 +14,9 @@ exports.createUser = (req, res,next)=>{
         .then(()=>{
             res.status(201).json(`${user.userName} est crée avec succés`)
         })
-        .catch(err => res.status(400).json({err}))
+        .catch(err => res.status(409).json({err}))
     })
-    .catch(err => res.status(400).json({err}))
+    .catch(err => res.status(500).json({err}))
 }
 
 exports.getAllUser = (req, res, next)=>{
