@@ -50,7 +50,8 @@ exports.signIn = (req, res)=>{
                     delete user.password
                     res.status(200).json({
                         userId: user._id,
-                        token : `Bearer ${token}`
+                        token : `Bearer ${token}`,
+                        userName : user.userName
                     })
                 }
             })
