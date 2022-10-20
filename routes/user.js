@@ -1,9 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const userController = require('../controler/user')
-// const passport = require('passport')
-// require('../middlewares/auth')
-// router.use(passport.initialize())
+const userController = require('../controllers/user')
 
 router.post('/signup', userController.createUser)
 router.get('/signup', userController.getAllUser)

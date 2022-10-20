@@ -7,44 +7,44 @@ exports.createUser = (req, res,next)=>{
     .then(hash => {
         const user = new User({
             userName: req.body.userName,
-            phone: req.body.phone,
+            email: req.body.email,
             password : hash        
         })
         user.save()
         .then(()=>{
             res.status(201).json(`${user.userName} est crée avec succés`)
         })
-        .catch(err => res.status(400).json({err}))
+        .catch(err => res.status(409).json({err}))
     })
-    .catch(err => res.status(400).json({err}))
+    .catch(err => res.status(500).json({err}))
 }
 
 exports.getAllUser = (req, res, next)=>{
     User.find()
     .then(users=>{
-        res.status(200).json(`user ${users}`)
+        res.status(200).json(users)
     })
     .catch(err=>{res.status(400).json({err})})
 }
 
 exports.signIn = (req, res)=>{
-    User.findOne({phone : req.body.phone})
+    User.findOne({email : req.body.email})
     .then(user =>{
         if(!user){res.status(401).json({
-            message: 'telephone ou mot de passe incorrect'
+            message: 'email ou mot de passe incorrect'
         })}
         else{
             const payload = {
                 id:user._id,
                 nom : user.userName,
-                phone : user.phone,
+                email : user.email,
                 expire : 24*60*60*1000
             }
             const token = jwt.encode(payload, '|Bk28051996|')
             bcrypt.compare(req.body.password, user.password)
             .then(valid =>{
                 if(!valid){res.status(401).json({
-                    message: 'telephone ou mot de passe incorrect'
+                    message: 'email ou mot de passe incorrect'
                 })}
                 else{
                     delete user.password
