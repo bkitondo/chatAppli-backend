@@ -20,7 +20,7 @@ exports.createUser = (req, res,next)=>{
 }
 
 exports.getAllUser = (req, res, next)=>{
-    User.find()
+    User.find({_id : {$ne :req.params.id}})
     .then(users=>{
         res.status(200).json(users)
     })
