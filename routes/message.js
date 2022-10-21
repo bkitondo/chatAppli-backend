@@ -6,6 +6,8 @@ const router = express.Router()
 const messageControler = require('../controllers/message')
 
 router.post('/add', messageControler.addMessage)
+router.post('/get', messageControler.getAllMessage)
+router.get('/getall', messageControler.getMessage)
 
 
 module.exports = router 
