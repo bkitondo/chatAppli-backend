@@ -7,7 +7,8 @@ const messageControler = require('../controllers/message')
 
 router.post('/add', messageControler.addMessage)
 router.post('/get', messageControler.getAllMessage)
-router.get('/getall', messageControler.getMessage)
+// router.get('/get', messageControler.getAllMessage)
+router.get('/getall/:id', messageControler.getMessage)
 
 
 module.exports = router 
