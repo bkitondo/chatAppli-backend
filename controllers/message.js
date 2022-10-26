@@ -1,38 +1,11 @@
 const Message = require('../models/messageModel')
 
-// exports.addMessage = (req, res, next) =>{
-//     const {from, to, message} = req.body
-//     const newMessage =  new Message({
-//         message : {
-//             text: req.body.message
-//         }
-//         // ,
-//         // users : [
-//         //     from,
-//         //     to
-//         // ],
-//         // sender : from
-//     })
-//     newMessage.save()
-
-//     if(data) return res.json({
-//         mgs : 'message envoyé avec succes'
-//     })
-//     else return res.json({
-//         mgs : 'message non envoyé'
-//     })
-// }
-
 exports.addMessage = (req, res, next) => {
 
-        const {from,to,message} = req.body;
+        const {conversatioInd,from,to,message} = req.body;
         const msg = new Message({
+            conversatioInd,
             message
-            ,users: [
-                from,
-                to
-            ],
-            sender:from,
         })
         msg.save()
         .then((data)=>{
@@ -41,8 +14,12 @@ exports.addMessage = (req, res, next) => {
         .catch(err=> console.log(err))      
 };
 
+
 exports.getMessage = (req, res, next)=>{
-    Message.find()
+    // const sender = req.params.from
+    // console.log(`sender  ${sender}`);
+    const conversatioInd = req.params.conversatioInd
+    Message.find({conversatioInd})
     .then(msg=>{
         res.status(200).json(msg)
     })
@@ -50,7 +27,7 @@ exports.getMessage = (req, res, next)=>{
 }
 
 
-module.exports.getAllMessage = async (req, res, next) => {
+exports.getAllMessage = async (req, res, next) => {
     try {
         const {from,to} = req.body;
         const messages = await Message.find({
@@ -69,4 +46,4 @@ module.exports.getAllMessage = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-};
+}
