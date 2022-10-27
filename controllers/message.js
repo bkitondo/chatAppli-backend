@@ -1,11 +1,11 @@
 const Message = require('../models/messageModel')
 
 exports.addMessage = (req, res, next) => {
-
-        const {conversatioInd,from,to,message} = req.body;
+        const {from,to,message} = req.body;
         const msg = new Message({
-            conversatioInd,
-            message
+            message,
+            from,
+            to
         })
         msg.save()
         .then((data)=>{
@@ -14,36 +14,17 @@ exports.addMessage = (req, res, next) => {
         .catch(err=> console.log(err))      
 };
 
-
-exports.getMessage = (req, res, next)=>{
-    // const sender = req.params.from
-    // console.log(`sender  ${sender}`);
-    const conversatioInd = req.params.conversatioInd
-    Message.find({conversatioInd})
-    .then(msg=>{
-        res.status(200).json(msg)
-    })
-    .catch(err=>{res.status(400).json({err})})
-}
-
-
-exports.getAllMessage = async (req, res, next) => {
-    try {
-        const {from,to} = req.body;
-        const messages = await Message.find({
-            users:{
-                All: [from,to],
-            },
-        }).sort({ updatedAt: 1 });
-
-        const projectMessages = messages.map((msg)=>{
-            return{
-                fromSelf: msg.sender.toString() === from,
-                message: msg.message.text,
-            };
-        });
-        res.json(projectMessages);
-    } catch (error) {
-        next(error);
-    }
+exports.getMessage = async(req, res, next)=>{
+    const from = req.params.from
+    const to = req.params.to
+    const messages = await Message.find({
+        $and: [
+          { $or: [{ from: from }, { to: from }]},
+          { $or: [{ from: to }, { to: to }] }
+        ],
+      });
+      return res.status(200).send({
+        type: "Success",
+        messages
+      });
 }
