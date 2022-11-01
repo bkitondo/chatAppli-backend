@@ -36,5 +36,4 @@ Message.find({conversationId :req.params.conversationId})
     res.status(200).json(conversation)
 })
 .catch((err)=>{throw err})
-
 }

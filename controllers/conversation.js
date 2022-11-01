@@ -1,4 +1,3 @@
-// const Message = require('../models/messageModel')
 const Conversation = require('../models/conversationModel')
 
 exports.findOrCreate = (req,res)=>{
@@ -6,7 +5,6 @@ exports.findOrCreate = (req,res)=>{
         { $or: [{ from: req.params.from }, { to: req.params.from }]},
         { $or: [{ from: req.params.to }, { to: req.params.to }] }
     ]})
-
     .then( (conversation) => {
         if(!conversation){
             const conversation =   new Conversation({
