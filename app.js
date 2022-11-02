@@ -8,8 +8,9 @@ const passport = require("passport")
 const { session } = require('passport')
 require('./middlewares/auth')
 
-app.use(express.json())
 app.use(cors())
+app.use(express.json())
+
 app.use(passport.initialize())
 
 restrictor = passport.Authenticator('jwt', {session:false})
