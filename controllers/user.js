@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const User = require('../models/userModel')
 const jwt = require('jwt-simple')
+require("dotenv").config()
 
 exports.createUser = (request, response)=>{
     bcrypt.hash(request.body.password, 10)
@@ -40,7 +41,7 @@ exports.signIn = (request, response)=>{
                 email : user.email,
                 expire : 24*60*60*1000
             }
-            const token = jwt.encode(payload, '|Bk28051996|')
+            const token = jwt.encode(payload, process.env.SECRET_KEY)
             bcrypt.compare(request.body.password, user.password)
             .then(valid =>{
                 if(!valid){response.status(401).json({
