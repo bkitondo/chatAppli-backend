@@ -1,14 +1,14 @@
 require('dotenv').config()
-require('./connexion/connexion')
+require('./connexion/mongoose')
 
 const http = require('http')
 const app = require('./app')
 const server = http.createServer(app.app)
-const port = process.env.port || 8080
+const port = process.env.PORT
 const {Server} = require('socket.io')
 const io = new Server(server, {
   cors : {
-    origin:"http://localhost:3000",
+    origin:process.env.URL_FRONTEND,
     methods: ["GET","POST"]
   }
 })

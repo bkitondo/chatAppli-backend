@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
+require("dotenv").config()
 
-exports.db_connect = mongoose.connect(`mongodb+srv://${process.env.USER}:Bk28051996@cluster0.mzmodyv.mongodb.net/chatAppli?retryWrites=true&w=majority`,
+exports.db_connect = mongoose.connect(`mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.mzmodyv.mongodb.net/${process.env.DB}?retryWrites=true&w=majority`,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connected in database !'))

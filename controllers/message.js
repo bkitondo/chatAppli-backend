@@ -15,7 +15,7 @@ exports.addMessage = (request, response) => {
         .catch(err => console.log(err))
 }
 
-exports.getMessage = (request, response, next) => {
+exports.getMessage = (request, response) => {
     const conversationId = request.params.conversationId
     Message.find({ conversationId })
         .then((conversation) => {

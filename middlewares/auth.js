@@ -7,7 +7,7 @@ const JwtStrategy = require('passport-jwt').Strategy,
      
 var opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = '|Bk28051996|'
+opts.secretOrKey = process.env.SECRET_KEY
 
 passport.use(new JwtStrategy(opts, (jwt_payload, done)=> {
 
