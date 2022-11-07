@@ -1,7 +1,7 @@
 const Message = require('../models/messageModel')
 
-exports.addMessage = (req, res, next) => {
-    const { conversationId, from, to, message } = req.body;
+exports.addMessage = (request, response) => {
+    const { conversationId, from, to, message } = request.body
     const msg = new Message({
         conversationId,
         message,
@@ -10,20 +10,16 @@ exports.addMessage = (req, res, next) => {
     })
     msg.save()
         .then((data) => {
-            res.status(201).json(`${data} est crée avec succés`)
+            response.status(201).json(`${data} est crée avec succés`)
         })
         .catch(err => console.log(err))
-};
+}
 
-exports.getMessage = (req, res, next) => {
-    const conversationId = req.params.conversationId
-    // console.log("conversationId ", conversationId)
-    // if (!conversationId || conversationId === undefined) {
-    //     return res.status(400).json('conversation Id')
-    // }
+exports.getMessage = (request, response, next) => {
+    const conversationId = request.params.conversationId
     Message.find({ conversationId })
         .then((conversation) => {
-            res.status(200).json(conversation)
+            response.status(200).json(conversation)
         })
         .catch((err) => { throw err })
 }
