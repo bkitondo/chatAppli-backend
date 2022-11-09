@@ -1,10 +1,11 @@
 const Message = require('../models/messageModel')
 
 exports.addMessage = (request, response) => {
-    const { conversationId, from, to, message } = request.body
+    const { conversationId, from, to, message, media } = request.body
     const msg = new Message({
         conversationId,
         message,
+        media,
         from,
         to
     })
