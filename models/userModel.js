@@ -15,6 +15,10 @@ const userSchema = mongoose.Schema({
       min: 14,
       max : 30
    },
+   picture: {
+      type : String,
+      required: true,
+   },
    password :{
       type: String,
       required: true,

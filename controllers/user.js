@@ -9,6 +9,7 @@ exports.createUser = (request, response)=>{
         const user = new User({
             userName: request.body.userName,
             email: request.body.email,
+            picture : request.body.picture,
             password : hash        
         })
         user.save()
@@ -38,6 +39,7 @@ exports.signIn = (request, response)=>{
             const payload = {
                 id:user._id,
                 nom : user.userName,
+                picture : user.picture,
                 email : user.email,
                 expire : 24*60*60*1000
             }
@@ -52,7 +54,8 @@ exports.signIn = (request, response)=>{
                     response.status(200).json({
                         userId: user._id,
                         token : `Bearer ${token}`,
-                        userName : user.userName
+                        userName : user.userName,
+                        picture: user.picture
                     })
                 }
             })

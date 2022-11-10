@@ -9,8 +9,10 @@ const messageSchema = mongoose.Schema(
       },
       message: {
                 type: String, 
-                required: true ,
                 min : 2
+      },
+      media: {
+        type: String,
       },
       to: {
         type: mongoose.Schema.Types.ObjectId,
