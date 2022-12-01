@@ -6,4 +6,4 @@ router.post('/add', messageControler.addMessage)
 // router.get('/getall/:from/:to', messageControler.getMessage)
 router.get('/getall/:conversationId', messageControler.getMessage)
 
-module.exports = router 
+module.exports = router
